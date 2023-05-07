@@ -1,9 +1,9 @@
 <?php
 
-namespace JoaoRoyer\PhpAsync\Handlers;
+namespace Joaociasul\PhpAsync\Handlers;
 
-use JoaoRoyer\PhpAsync\Abstracts\AbstractAsync;
-use JoaoRoyer\PhpAsync\Exceptions\PidException;
+use Joaociasul\PhpAsync\Abstracts\AbstractAsync;
+use Joaociasul\PhpAsync\Exceptions\PidException;
 
 class Async extends AbstractAsync
 {

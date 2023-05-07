@@ -1,9 +1,9 @@
 <?php
 
-namespace JoaoRoyer\PhpAsync\Abstracts;
+namespace Joaociasul\PhpAsync\Abstracts;
 
-use JoaoRoyer\PhpAsync\Exceptions\PidException;
-use JoaoRoyer\PhpAsync\Helpers\UuidHelper;
+use Joaociasul\PhpAsync\Exceptions\PidException;
+use Joaociasul\PhpAsync\Helpers\UuidHelper;
 
 abstract class AbstractAsync
 {

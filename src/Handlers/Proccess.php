@@ -1,12 +1,12 @@
 <?php
 
-namespace JoaoRoyer\PhpAsync\Handlers;
+namespace Joaociasul\PhpAsync\Handlers;
 
 use Exception;
 use InvalidArgumentException;
-use JoaoRoyer\PhpAsync\Exceptions\PidException;
-use JoaoRoyer\PhpAsync\Helpers\EventsHelper;
-use JoaoRoyer\PhpAsync\Helpers\ValidationHelper;
+use Joaociasul\PhpAsync\Exceptions\PidException;
+use Joaociasul\PhpAsync\Helpers\EventsHelper;
+use Joaociasul\PhpAsync\Helpers\ValidationHelper;
 
 class Proccess
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace JoaoRoyer\PhpAsync\Exceptions;
+namespace Joaociasul\PhpAsync\Exceptions;
 
 use Exception;
 

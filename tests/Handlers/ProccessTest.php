@@ -1,16 +1,15 @@
 <?php
 
-namespace JoaoRoyer\PhpAsyncTests\Handlers;
+namespace Joaociasul\PhpAsyncTests\Handlers;
 
 use InvalidArgumentException;
-use JoaoRoyer\PhpAsync\Handlers\Proccess;
-use JoaoRoyer\PhpAsync\Helpers\EventsHelper;
+use Joaociasul\PhpAsync\Handlers\Proccess;
+use Joaociasul\PhpAsync\Helpers\EventsHelper;
 use PHPUnit\Framework\TestCase;
 
 class ProccessTest extends TestCase
 {
-    public function testMake()
-    {
+    public function testMake(){
         $proccesses = [];
         $event = EventsHelper::getInstance();
         for ($i = 1; $i <= 100; $i++) {

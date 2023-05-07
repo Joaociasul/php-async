@@ -1,6 +1,6 @@
 <?php
 
-namespace JoaoRoyer\PhpAsync\Helpers;
+namespace Joaociasul\PhpAsync\Helpers;
 
 class UuidHelper
 {
