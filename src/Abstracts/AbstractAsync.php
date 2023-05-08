@@ -31,7 +31,7 @@ abstract class AbstractAsync
 
     public function exec(callable $callback): void
     {
-        if (! $this->pid) {
+        if ($this->pid === 0) {
             $callback();
             exit;
         }
