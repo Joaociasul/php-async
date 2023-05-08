@@ -24,8 +24,9 @@ class Proccess
      * } $callables An array of callbacks to call.
      * @param int $limitForExecution The maximum number of simultaneous executions.
      *
-     * @throws InvalidArgumentException If any element of $callables is not a valid callable.
      * @return void
+     * @throws PidException
+     * @throws InvalidArgumentException If any element of $callables is not a valid callable.
      */
     public static function make(array $callables, int $limitForExecution = 10): void
     {
@@ -35,14 +36,8 @@ class Proccess
         foreach ($callables as $key => $callable) {
             ValidationHelper::throwIfNotCallable($callable);
             $async = new Async();
-            try {
-                $async->call($callable);
-            } catch (Exception $exception) {
-                $event->dispatch(self::EVENT_ERROR . $key, [
-                    'exception' => $exception
-                ]);
-                exit;
-            }
+            $async->setEventsHelper($event);
+            $async->call($callable, $key);
             $running[$key] = $async;
             if ($count >= $limitForExecution) {
                 self::await($running);
@@ -62,13 +57,8 @@ class Proccess
      */
     private static function await(array &$proccesses)
     {
-        $event = EventsHelper::getInstance();
         foreach ($proccesses as $key => $proccess) {
             $proccess->wait();
-            $event->dispatch(self::EVENT_SUCCESS . $key, [
-                'uuid' => $proccess->getProcessKey(),
-                'array_key' => $key,
-            ]);
             unset($proccesses[$key]);
         }
     }

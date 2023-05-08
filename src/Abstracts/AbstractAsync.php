@@ -3,6 +3,8 @@
 namespace Joaociasul\PhpAsync\Abstracts;
 
 use Joaociasul\PhpAsync\Exceptions\PidException;
+use Joaociasul\PhpAsync\Handlers\Proccess;
+use Joaociasul\PhpAsync\Helpers\EventsHelper;
 use Joaociasul\PhpAsync\Helpers\UuidHelper;
 
 abstract class AbstractAsync
@@ -10,6 +12,8 @@ abstract class AbstractAsync
     protected $pid;
 
     private $processKey = null;
+
+    protected $eventsHelper;
 
     /**
      * @throws PidException
@@ -29,10 +33,15 @@ abstract class AbstractAsync
         return $status;
     }
 
-    public function exec(callable $callback): void
+    public function exec(callable $callback, string $key = null): void
     {
+        $event = $this->getEventsHelper();
         if ($this->pid === 0) {
             $callback();
+            $event->dispatch(Proccess::EVENT_SUCCESS . $key ?? $this->getProcessKey(), [
+                'uuid' => $this->getProcessKey(),
+                'array_key' => $key,
+            ]);
             exit;
         }
     }
@@ -50,5 +59,15 @@ abstract class AbstractAsync
     public function getProcessKey(): string
     {
         return $this->processKey;
+    }
+
+    public function setEventsHelper(EventsHelper $eventsHelper)
+    {
+        $this->eventsHelper = $eventsHelper;
+    }
+
+    public function getEventsHelper(): EventsHelper
+    {
+        return $this->eventsHelper;
     }
 }
