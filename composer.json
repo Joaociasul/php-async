@@ -7,9 +7,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Joaociasul\\PhpAsync\\": "src/",
-            "Joaociasul\\PhpAsyncTests\\": "tests/"
-        }
+            "Joaociasul\\PhpAsync\\": "src/"
+        },
+        "exclude-from-classmap": [
+            "/tests/"
+        ]
     },
     "authors": [
         {
