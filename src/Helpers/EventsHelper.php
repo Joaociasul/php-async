@@ -9,7 +9,8 @@ class EventsHelper
 
     private function __construct() {}
 
-    public static function getInstance(): EventsHelper {
+    public static function getInstance(): EventsHelper
+    {
         self::$instance = self::$instance ?? new self();
         return self::$instance;
     }
@@ -21,7 +22,8 @@ class EventsHelper
      * @param callable $callback The callback function to be executed when the event is triggered.
      * @return void
      */
-    public function listen(string $event, callable $callback): void {
+    public function listen(string $event, callable $callback): void
+    {
         self::$listeners[$event][] = $callback;
     }
 
@@ -32,7 +34,8 @@ class EventsHelper
      * @param array $args Optional arguments to pass to the event listeners.
      * @return void
      */
-    public function dispatch(string $event, array $args = []): void {
+    public function dispatch(string $event, array $args = []): void
+    {
         if (isset(self::$listeners[$event])) {
             foreach (self::$listeners[$event] as $callback) {
                 call_user_func($callback, $args);
