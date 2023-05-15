@@ -1,7 +1,6 @@
 {
     "name": "joaociasul/php-async",
     "require": {
-        "php": ">=7.3.0",
         "ext-pcntl": "*",
         "ext-openssl": "*",
         "ext-json": "*"

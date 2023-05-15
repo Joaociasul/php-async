@@ -42,10 +42,9 @@ abstract class AbstractAsync
 
     public function exec(callable $callback, string $key = null): void
     {
-        $event = $this->getEventsHelper();
         if ($this->pid === 0) {
             $callback();
-            $this->runThen();
+            $this->runThen($key);
             exit;
         }
     }

@@ -11,5 +11,4 @@ for ($i = 0; $i <= 2000; $i++) {
         'key-' . $i => "value" . $i,
     ];
     FilesHelper::updateFileJsonAndGetOriginalContent($fileName, $newContent);
-//    usleep(10);
 }
