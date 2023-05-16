@@ -6,7 +6,7 @@ use Joaociasul\PhpAsync\Helpers\FilesHelper;
 use Joaociasul\PhpAsync\Helpers\UuidHelper;
 
 require 'vendor/autoload.php';
-$storagePath = __DIR__ . '/../storage/';
+$storagePath = dirname(__FILE__) . '/../storage/';
 
 $limitForExecution = 10;
 
