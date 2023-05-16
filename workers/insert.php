@@ -6,9 +6,9 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $fileName = __DIR__ . '/../storage/tasks.json';
 
+
 for ($i = 0; $i <= 2000; $i++) {
-    $newContent = [
-        'key-' . $i => "value" . $i,
-    ];
-    FilesHelper::updateFileJsonAndGetOriginalContent($fileName, $newContent);
+
+    $job = new \Joaociasul\PhpAsync\Jobs\JobExample(['key' => $i]);
+    \Joaociasul\PhpAsync\Jobs\Queue::dispatch($job);
 }

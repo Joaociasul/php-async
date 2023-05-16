@@ -1,5 +1,6 @@
 <?php
 
+use Joaociasul\PhpAsync\Abstracts\JobInterface;
 use Joaociasul\PhpAsync\Handlers\Proccess;
 use Joaociasul\PhpAsync\Helpers\FilesHelper;
 use Joaociasul\PhpAsync\Helpers\UuidHelper;
@@ -7,11 +8,26 @@ use Joaociasul\PhpAsync\Helpers\UuidHelper;
 require __DIR__ . '/../vendor/autoload.php';
 $storagePath = __DIR__ . '/../storage/';
 
-$fileName = $storagePath . 'tasks.json';
+$limitForExecution = 10;
 
-$count = 0;
+$argsRegex = [
+    'process' =>  '/--proccess=(\d+)/',
+    'sleep' => '/--sleep=(\d)+/',
+];
+
+$arguments = [
+    'process' => 10,
+    'sleep' => 1,
+];
+
+$args = implode("\n", $argv);
+foreach ($argsRegex as $key => $pattern) {
+    preg_match($pattern, $args, $matches);
+    $arguments[$key] = $matches[1] ?? $arguments[$key];
+}
+
+$fileName = $storagePath . 'tasks.json';
 while (true) {
-    $count++;
     exec('ls ' . $storagePath, $output);
     $contentBkp = [];
     foreach ($output as $file) {
@@ -29,18 +45,27 @@ while (true) {
     $content = FilesHelper::updateFileJsonAndGetOriginalContent($fileName, [], true);
     Proccess::make(
         array_map(
-            function ($item) {
-                return static function () use ($item) {
-                    file_put_contents('/tmp/task-php.log', $item . "\n", FILE_APPEND);
-                    sleep(1);
+            function ($job) {
+                return static function () use ($job) {
+                    /**
+                     * @var JobInterface $instance
+                     */
+                    $instance = unserialize($job);
+                    try {
+                        $instance->handle();
+                        $instance->success();
+                    } catch (\Exception $e) {
+                        $instance->failed($e);
+                        throw $e;
+                    }
+
                 };
             },
             $content
         ),
-        100
+        $arguments['process']
     );
     unlink($filenameBkp);
-    echo $count . "\n";
-    usleep(550000);
+    sleep((int) $arguments['sleep']);
 }
 
