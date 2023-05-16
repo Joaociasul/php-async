@@ -5,7 +5,7 @@ use Joaociasul\PhpAsync\Handlers\Proccess;
 use Joaociasul\PhpAsync\Helpers\FilesHelper;
 use Joaociasul\PhpAsync\Helpers\UuidHelper;
 
-require __DIR__ . '/../vendor/autoload.php';
+require 'vendor/autoload.php';
 $storagePath = __DIR__ . '/../storage/';
 
 $limitForExecution = 10;
